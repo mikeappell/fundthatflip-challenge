@@ -1,28 +1,35 @@
 # Represents a single DataPoint from the OpenWeatherMap API
 class DataPoint < ApplicationRecord
+  ATTRIBUTE_API_MAP = {
+    location_id: ['id'],
+    name: ['name'],
+    sys_country: ['sys', 'country'],
+    sys_sunrise: ['sys', 'sunrise'],
+    sys_sunset: ['sys', 'sunset'],
+    coord_lat: ['coord', 'lat'],
+    coord_lon: ['coord', 'lon'],
+    weather_id: ['weather', 0, 'id'],
+    weather_main: ['weather', 0, 'main'],
+    weather_description: ['weather', 0, 'description'],
+    weather_icon: ['weather', 0, 'icon'],
+    main_temp: ['main', 'temp'],
+    main_pressure: ['main', 'pressure'],
+    main_humidity: ['main', 'humidity'],
+    main_temp_min: ['main', 'temp_min'],
+    main_temp_max: ['main', 'temp_max'],
+    visibility: ['visibility'],
+    wind_speed: ['wind', 'speed'],
+    wind_gust: ['wind', 'gust'],
+    clouds_all: ['clouds', 'all'],
+    dt: ['dt']
+  }
+
   def self.initialize_from_api_data_point(api_data_point)
-    data_point = self.new
-    data_point.location_id = api_data_point['id']
-    data_point.name = api_data_point['name']
-    data_point.sys_country = api_data_point['sys']['country']
-    data_point.sys_sunrise = api_data_point['sys']['sunrise']
-    data_point.sys_sunset = api_data_point['sys']['sunset']
-    data_point.coord_lat = api_data_point['coord']['lat']
-    data_point.coord_lon = api_data_point['coord']['lon']
-    data_point.weather_id = api_data_point['weather'][0]['id']
-    data_point.weather_main = api_data_point['weather'][0]['main']
-    data_point.weather_description = api_data_point['weather'][0]['description']
-    data_point.weather_icon = api_data_point['weather'][0]['icon']
-    data_point.main_temp = api_data_point['main']['temp']
-    data_point.main_pressure = api_data_point['main']['pressure']
-    data_point.main_humidity = api_data_point['main']['humidity']
-    data_point.main_temp_min = api_data_point['main']['temp_min']
-    data_point.main_temp_max = api_data_point['main']['temp_max']
-    data_point.visibility = api_data_point['visibility']
-    data_point.wind_speed = api_data_point['wind']['speed']
-    data_point.wind_gust = api_data_point['wind']['gust']
-    data_point.clouds_all = api_data_point['clouds']['all']
-    data_point.dt = api_data_point['dt']
+    data_point = DataPoint.new
+
+    ATTRIBUTE_API_MAP.each do |attr, api_attr|
+      data_point[attr] = api_data_point.dig(*api_attr)
+    end
 
     data_point
   end
