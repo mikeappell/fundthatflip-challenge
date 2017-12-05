@@ -2,7 +2,7 @@ class WeatherAPIWrapper
   include HTTParty
 
   API_KEY = ENV['OPENWEATHERMAP_API_KEY']
-  BASE_PATH = "/data/2.5/weather?APPID=#{ API_KEY }&q="
+  BASE_PATH = "/data/2.5/weather?APPID=#{ API_KEY }&units=imperial&q=" # Returns T in Fahrenheit
 
   base_uri 'api.openweathermap.org'
   default_timeout 5
