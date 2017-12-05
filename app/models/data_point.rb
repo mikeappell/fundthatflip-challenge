@@ -1,6 +1,6 @@
 # Represents a single DataPoint from the OpenWeatherMap API
 class DataPoint < ApplicationRecord
-  ATTRIBUTE_API_MAP = {
+  ATTRIBUTE_API_MAP = HashWithIndifferentAccess.new(
     location_id: ['id'],
     name: ['name'],
     sys_country: ['sys', 'country'],
@@ -19,10 +19,11 @@ class DataPoint < ApplicationRecord
     main_temp_max: ['main', 'temp_max'],
     visibility: ['visibility'],
     wind_speed: ['wind', 'speed'],
+    wind_deg: ['wind', 'deg'],
     wind_gust: ['wind', 'gust'],
     clouds_all: ['clouds', 'all'],
     dt: ['dt']
-  }
+  )
 
   def self.initialize_from_api_data_point(api_data_point)
     data_point = DataPoint.new
