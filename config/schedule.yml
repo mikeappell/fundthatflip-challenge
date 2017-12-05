@@ -1,0 +1,5 @@
+update_weather:
+  # every 5 minutes
+  cron: "*/5 * * * *"
+  class: "UpdateNYCWeatherJob"
+  queue: high_priority
