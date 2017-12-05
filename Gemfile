@@ -34,6 +34,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'httparty'
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -43,6 +46,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'pry'
   gem 'rspec-rails'
+  gem 'foreman'
 end
 
 group :development do

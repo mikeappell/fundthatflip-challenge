@@ -1,0 +1,4 @@
+:concurrency: 10
+:queues:
+  - [high_priority, 2]
+  - default
