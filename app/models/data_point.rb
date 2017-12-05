@@ -34,4 +34,14 @@ class DataPoint < ApplicationRecord
 
     data_point
   end
+
+  def date
+    epoch_to_datetime(dt)
+  end
+
+  private
+
+  def epoch_to_datetime(time)
+    Time.at(time).to_datetime
+  end
 end

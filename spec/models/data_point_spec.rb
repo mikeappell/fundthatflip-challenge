@@ -13,4 +13,14 @@ RSpec.describe DataPoint, type: :model do
       end
     end
   end
+
+  describe '#date' do
+    it "converts a DataPoint's 'dt' attribute to a DateTime" do
+      test_epoch_date = 1512502562
+      expected_datetime = DateTime.parse('Tue, 05 Dec 2017 14:36:02 -0500')
+
+      data_point = DataPoint.new(dt: test_epoch_date)
+      expect(data_point.date).to eq expected_datetime
+    end
+  end
 end
