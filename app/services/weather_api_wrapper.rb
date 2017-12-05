@@ -1,11 +1,17 @@
 class WeatherAPIWrapper
   include HTTParty
 
-  API_KEY = ENV['OPENWEATHERMAP_API_KEY']
-  BASE_PATH = "/data/2.5/weather?APPID=#{ API_KEY }&units=imperial&q=" # Returns T in Fahrenheit
-
   base_uri 'api.openweathermap.org'
   default_timeout 5
+
+  def api_key
+    ENV['OPENWEATHERMAP_API_KEY']
+  end
+
+  # Returns T in Fahrenheit
+  def base_path
+    "/data/2.5/weather?APPID=#{ api_key }&units=imperial&q="
+  end
 
   def handle_timeouts
     begin
@@ -17,7 +23,7 @@ class WeatherAPIWrapper
 
   def poll_location_weather(city_name = 'new york')
     handle_timeouts do
-      url = "#{ BASE_PATH }#{ city_name }"
+      url = "#{ base_path }#{ city_name }"
       self.class.get(url).parsed_response
     end
   end
