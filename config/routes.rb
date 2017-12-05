@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
+  root to: 'data_points#index'
+
   namespace :api do
     namespace :v1 do
       resources :data_points, only: [:index]
