@@ -1,4 +1,6 @@
+#
 # Represents a single DataPoint from the OpenWeatherMap API
+#
 class DataPoint < ApplicationRecord
   ATTRIBUTE_API_MAP = HashWithIndifferentAccess.new(
     location_id: ['id'],
