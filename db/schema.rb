@@ -10,9 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20171205034727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "data_points", force: :cascade do |t|
+    t.integer "location_id"
+    t.string "name"
+    t.string "sys_country"
+    t.integer "sys_sunrise"
+    t.integer "sys_sunset"
+    t.float "coord_lat"
+    t.float "coord_lon"
+    t.integer "weather_id"
+    t.string "weather_main"
+    t.string "weather_description"
+    t.string "weather_icon"
+    t.float "main_temp"
+    t.integer "main_pressure"
+    t.integer "main_humidity"
+    t.float "main_temp_min"
+    t.float "main_temp_max"
+    t.integer "visibility"
+    t.float "wind_speed"
+    t.integer "wind_deg"
+    t.float "wind_gust"
+    t.integer "clouds_all"
+    t.integer "dt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
