@@ -38,7 +38,7 @@ class DataPoint < ApplicationRecord
   end
 
   def date
-    epoch_to_datetime(dt)
+    epoch_to_datetime(dt).strftime("%m/%d/%Y %H:%M")
   end
 
   private
