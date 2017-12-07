@@ -27,6 +27,11 @@ class DataPoint < ApplicationRecord
     dt: ['dt']
   )
 
+  # Note: consider changing 'dt' to be the primary key, since it's intended to be unique
+  # Also consider adding some not-null validations, specifically to those attributes used
+  # in the front-end
+  #
+  # TODO: Add handling for missing entries in the api's returned data
   def self.find_or_initialize_from_api_data_point(api_data_point)
     data_point = DataPoint.find_by(dt: api_data_point['dt'])
 
@@ -48,7 +53,7 @@ class DataPoint < ApplicationRecord
   end
 
   def weather
-    self.weather_description.split.map(&:capitalize).join(' ')
+    self.weather_description.titleize
   end
 
   private
