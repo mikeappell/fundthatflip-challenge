@@ -39,8 +39,12 @@ class DataPoint < ApplicationRecord
     data_point
   end
 
-  def date
+  def date_and_time
     epoch_to_datetime(dt).strftime("%m/%d/%Y %H:%M")
+  end
+
+  def time
+    epoch_to_datetime(dt).strftime("%H:%M")
   end
 
   def weather

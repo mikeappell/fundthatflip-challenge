@@ -3,7 +3,6 @@
 
   h1.Header {
     text-align: center;
-    margin-bottom: 50px;
     font-size: 35px;
   }
 
@@ -11,5 +10,15 @@
     .ReactTable { margin-top: 20px; }
     .rt-tbody { font-size: 13px; }
     .rt-td { text-align: center; }
+  }
+
+  .UpdateTimer {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .InfoBlurb {
+    text-align: center;
+    margin: 20px;
   }
 }

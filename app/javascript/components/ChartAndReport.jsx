@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import jQuery from 'jquery';
 import { XYPlot, XAxis, YAxis, HorizontalGridLines, LabelSeries, LineSeries } from 'react-vis';
 import ReactTable from 'react-table';
 
-window.jQuery = jQuery;
-window.$ = jQuery;
+const TimerInterval = 300;
+const NumberOfDataPoints = 20;
 
 export default class ChartAndReport extends Component {
+
   constructor(props) {
     super(props);
-    this.state = { chartWeatherData: [], reportWeatherData: [] }
+    this.state = {
+      chartWeatherData: [],
+      reportWeatherData: [],
+      timerTime: TimerInterval,
+    }
   }
 
   static propTypes = {
@@ -18,8 +22,11 @@ export default class ChartAndReport extends Component {
   }
 
   componentDidMount = () => {
+    this.timer = setInterval(this.timerTick, 1000);
     this.getWeatherData();
   }
+
+  componentWillUnmount = () => { clearInterval(this.timer); }
 
   formatTickLabel = (t, i) => {
     return this.state.chartWeatherData.filter((item) => { return item.x === i })[0].label;
@@ -30,10 +37,32 @@ export default class ChartAndReport extends Component {
       type: 'GET',
       url: this.props.dataPointsUrl,
       success: (data) => {
-        const chartWeatherData = data.map((datum, i) => { return { x: i, y: datum.main_temp, label: datum.date } });
+        const chartWeatherData = data.map((datum, i) => { return { x: i, y: datum.main_temp, label: datum.time } });
         this.setState({ chartWeatherData, reportWeatherData: data });
       }
     })
+  }
+
+  timerTick = () => {
+    const newTimerTime = this.state.timerTime - 1;
+    if (newTimerTime === 0) {
+      this.getWeatherData();
+      this.setState({ timerTime: TimerInterval })
+    } else {
+      this.setState({ timerTime: newTimerTime })
+    }
+  }
+
+  renderUpdateTimer = () => {
+    return (
+      <div className="UpdateTimer">
+        Updates in&nbsp;
+        <span>{this.state.timerTime}</span>
+        &nbsp;seconds
+        <br />
+        (if there's new data)
+      </div>
+    )
   }
 
   renderWeatherChart = () => {
@@ -55,7 +84,7 @@ export default class ChartAndReport extends Component {
   renderWeatherReport = () => {
     const columns = [{
       Header: 'Date and Time',
-      accessor: 'date',
+      accessor: 'date_and_time',
     },
     {
       Header: 'Temperature (F)',
@@ -89,8 +118,16 @@ export default class ChartAndReport extends Component {
           columns={columns}
           showPagination={false}
           sortable={false}
-          pageSize={12}
+          pageSize={NumberOfDataPoints}
         />
+      </div>
+    )
+  }
+
+  renderInfoBlurb = () => {
+    return (
+      <div className="InfoBlurb">
+        Data polled at five minute invervals from <a href="https://openweathermap.org/api">OpenWeatherMap</a>
       </div>
     )
   }
@@ -99,8 +136,10 @@ export default class ChartAndReport extends Component {
     return (
       <div className="ChartAndReport">
         <h1 className="Header">Most Recent Weather in NYC</h1>
+        {this.renderUpdateTimer()}
         {this.renderWeatherChart()}
         {this.renderWeatherReport()}
+        {this.renderInfoBlurb()}
       </div>
     )
   }
