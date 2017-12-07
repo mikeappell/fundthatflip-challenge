@@ -4,7 +4,6 @@ import { XYPlot, XAxis, YAxis, HorizontalGridLines, LabelSeries, LineSeries } fr
 import ReactTable from 'react-table';
 
 const TimerInterval = 300;
-const NumberOfDataPoints = 20;
 
 export default class ChartAndReport extends Component {
 
@@ -118,7 +117,7 @@ export default class ChartAndReport extends Component {
           columns={columns}
           showPagination={false}
           sortable={false}
-          pageSize={NumberOfDataPoints}
+          pageSize={this.state.reportWeatherData.length}
         />
       </div>
     )
