@@ -1,0 +1,48 @@
+data_point_1: &default
+  location_id: 5128581
+  name: "New York"
+  sys_country: "US"
+  sys_sunrise: 1512475535
+  sys_sunset: 1512509312
+  coord_lat: 40.71
+  coord_lon: -74.01
+  weather_id: 804
+  weather_main: "Clouds"
+  weather_description: "overcast clouds"
+  weather_icon: "04d"
+  main_temp: 59.59
+  main_pressure: 1017
+  main_humidity: 72
+  main_temp_min: 55.4
+  main_temp_max: 64.4
+  visibility: 16093
+  wind_speed: 13.89
+  wind_deg: 186
+  wind_gust: nil
+  clouds_all: 90
+  dt: 1512500160
+
+data_point_2:
+  <<: *default
+  dt: 1512501300
+  main_temp: 59.73
+
+data_point_3:
+  <<: *default
+  dt: 1512507360
+  main_temp: 58.7
+
+data_point_4:
+  <<: *default
+  dt: 1512509100
+  main_temp: 56.21
+
+data_point_5:
+  <<: *default
+  dt: 1512497700
+  main_temp: 55.54
+
+data_point_6:
+  <<: *default
+  dt: 1512662160
+  main_temp: 60.1
