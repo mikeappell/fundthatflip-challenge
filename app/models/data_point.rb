@@ -27,13 +27,15 @@ class DataPoint < ApplicationRecord
     dt: ['dt']
   )
 
-  def self.initialize_from_api_data_point(api_data_point)
-    data_point = DataPoint.new
+  def self.find_or_initialize_from_api_data_point(api_data_point)
+    data_point = DataPoint.find_by(dt: api_data_point['dt'])
 
-    ATTRIBUTE_API_MAP.each do |attr, api_attr|
-      data_point[attr] = api_data_point.dig(*api_attr)
+    unless data_point.present?
+      data_point = DataPoint.new
+      ATTRIBUTE_API_MAP.each do |attr, api_attr|
+        data_point[attr] = api_data_point.dig(*api_attr)
+      end
     end
-
     data_point
   end
 
