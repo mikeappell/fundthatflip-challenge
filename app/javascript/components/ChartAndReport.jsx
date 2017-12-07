@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import jQuery from 'jquery';
 import { XYPlot, XAxis, YAxis, HorizontalGridLines, LabelSeries, LineSeries } from 'react-vis';
+import ReactTable from 'react-table';
 
 window.jQuery = jQuery;
 window.$ = jQuery;
@@ -9,7 +10,7 @@ window.$ = jQuery;
 export default class ChartAndReport extends Component {
   constructor(props) {
     super(props);
-    this.state = { weatherData: [] }
+    this.state = { chartWeatherData: [], reportWeatherData: [] }
   }
 
   static propTypes = {
@@ -21,7 +22,7 @@ export default class ChartAndReport extends Component {
   }
 
   formatTickLabel = (t, i) => {
-    return this.state.weatherData.filter((item) => { return item.x === i })[0].label;
+    return this.state.chartWeatherData.filter((item) => { return item.x === i })[0].label;
   }
 
   getWeatherData = () => {
@@ -29,24 +30,72 @@ export default class ChartAndReport extends Component {
       type: 'GET',
       url: this.props.dataPointsUrl,
       success: (data) => {
-        const weatherData = data.map((datum, i) => { return { x: i, y: datum.main_temp, label: datum.date } });
-        this.setState({ weatherData });
+        const chartWeatherData = data.map((datum, i) => { return { x: i, y: datum.main_temp, label: datum.date } });
+        this.setState({ chartWeatherData, reportWeatherData: data });
       }
     })
   }
 
-  render() {
+  renderWeatherChart = () => {
     return (
-      <div>
+      <div className="WeatherChart">
         <XYPlot
           width={1200}
           height={300}>
           <HorizontalGridLines />
           <LineSeries
-            data={this.state.weatherData}/>
-          <XAxis tickFormat={this.formatTickLabel} tickTotal={this.state.weatherData.length}/>
+            data={this.state.chartWeatherData}/>
+          <XAxis tickFormat={this.formatTickLabel} tickTotal={this.state.chartWeatherData.length}/>
           <YAxis />
         </XYPlot>
+      </div>
+    )
+  }
+
+  renderWeatherReport = () => {
+    const columns = [{
+      Header: 'Temperature',
+      accessor: 'main_temp'
+    },
+    {
+      Header: 'Description',
+      accessor: 'weather',
+    },
+    {
+      Header: 'Humidity (%)',
+      accessor: 'main_humidity',
+    },
+    {
+      Header: 'Pressure (hPa)',
+      accessor: 'main_pressure',
+    },
+    {
+      Header: 'Visibility (meters)',
+      accessor: 'visibility',
+    },
+    {
+      Header: 'Wind Speed (mph)',
+      accessor: 'wind_speed',
+    }]
+    return (
+      <div className="WeatherReport">
+        <ReactTable
+          className="-striped"
+          data={this.state.reportWeatherData}
+          columns={columns}
+          showPagination={false}
+          pageSize={12}
+        />
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div className="ChartAndReport">
+        <h2 className="Header">Most Recent Weather in NYC</h2>
+        {this.renderWeatherChart()}
+        {this.renderWeatherReport()}
       </div>
     )
   }

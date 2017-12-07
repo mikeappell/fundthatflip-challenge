@@ -14,4 +14,7 @@
  *= require_self
  */
 
-@import "../node_modules/react-vis/dist/style"
+@import "../node_modules/react-vis/dist/style";
+@import "../node_modules/react-table/react-table";
+
+@import '../components/chart-and-report';

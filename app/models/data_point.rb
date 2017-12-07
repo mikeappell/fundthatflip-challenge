@@ -43,6 +43,10 @@ class DataPoint < ApplicationRecord
     epoch_to_datetime(dt).strftime("%m/%d/%Y %H:%M")
   end
 
+  def weather
+    self.weather_description.split.map(&:capitalize).join(' ')
+  end
+
   private
 
   def epoch_to_datetime(time)
