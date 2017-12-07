@@ -54,6 +54,6 @@ class DataPoint < ApplicationRecord
   private
 
   def epoch_to_datetime(time)
-    Time.at(time).to_datetime
+    Time.at(time).to_datetime.in_time_zone('Eastern Time (US & Canada)')
   end
 end
