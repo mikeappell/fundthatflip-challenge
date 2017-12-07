@@ -1,3 +1,5 @@
+[![Travis build statis:](https://travis-ci.org/mikeappell/polling-api-challenge.svg?branch=master)](https://travis-ci.org/mikeappell/polling-api-challenge)
+
 # Auto-Updating Weather Report (polls OpenWeatherMaps API)
 
 This is the solution to a code challenge, the requirements being:
