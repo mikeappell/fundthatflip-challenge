@@ -1,8 +1,15 @@
 .ChartAndReport {
-  h2.Header { text-align: center; }
+  font-family: 'Lato', sans-serif;
 
-  div.WeatherReport {
-    div.ReactTable { margin-top: 20px; }
-    div.rt-td { text-align: center; }
+  h1.Header {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 35px;
+  }
+
+  .WeatherReport {
+    .ReactTable { margin-top: 20px; }
+    .rt-tbody { font-size: 13px; }
+    .rt-td { text-align: center; }
   }
 }

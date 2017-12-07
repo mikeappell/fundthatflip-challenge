@@ -40,7 +40,7 @@ export default class ChartAndReport extends Component {
     return (
       <div className="WeatherChart">
         <XYPlot
-          width={1200}
+          width={document.body.clientWidth - 20}
           height={300}>
           <HorizontalGridLines />
           <LineSeries
@@ -54,8 +54,12 @@ export default class ChartAndReport extends Component {
 
   renderWeatherReport = () => {
     const columns = [{
-      Header: 'Temperature',
-      accessor: 'main_temp'
+      Header: 'Date and Time',
+      accessor: 'date',
+    },
+    {
+      Header: 'Temperature (F)',
+      accessor: 'main_temp',
     },
     {
       Header: 'Description',
@@ -84,6 +88,7 @@ export default class ChartAndReport extends Component {
           data={this.state.reportWeatherData}
           columns={columns}
           showPagination={false}
+          sortable={false}
           pageSize={12}
         />
       </div>
@@ -93,7 +98,7 @@ export default class ChartAndReport extends Component {
   render() {
     return (
       <div className="ChartAndReport">
-        <h2 className="Header">Most Recent Weather in NYC</h2>
+        <h1 className="Header">Most Recent Weather in NYC</h1>
         {this.renderWeatherChart()}
         {this.renderWeatherReport()}
       </div>
