@@ -63,7 +63,11 @@ At first, you won't have many data points; these will be created in time as the 
 
 ### Things I'd love to improve
 
-- More tests! There are some model tests for DataPoint present, but more are needed, as well as controller and feature tests. Jest should be used to test the main React component as well.
+- Right now the chart doesn't deal with gaps in data well.
+  - Because it's hosted on Heroku, and Heroku puts its free dynos to sleep at least a few hours every day, we end up with skipped data points since its data comes from intermittently polling an API.
+  - However, the current data visualization assumes a fairly contiguous set of data in relation to time.
+  - A potential solution would be to scale the spacing between data points to the time elapsed between them.
+- ~~More tests! There are some model tests for DataPoint present, but more are needed, as well as controller and feature tests.~~ Model and controller tests present. Jest should be used to test the main React component as well.
 - Make this API-agnostic (either generalize DataPoint to other APIs (tricky) or rename it to `OpenWeatherMapDataPoint` and create models for other API's JSON signatures.) New wrappers would need to be created for each API.
 - Make this location-agnostic: right now, it's specific to NYC, but it would be great if that weren't the case. This would require a pretty significant rewrite though, as data points are currently being polled/created progressively through time, so switching to a new location would leave a gap in time for that location/stop collecting data points for the old location.
 - It would be nice if the Rails back end pushed new data causing the front end to update, rather than polling the back end on a timer for new updates.
